@@ -1,18 +1,21 @@
 {
-  "name": "webfront",
-  "version": "0.0.0",
+  "name": "reminder-web",
+  "title": "Reminder Web",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "clean": "rimraf dist",
-    "start": "DEBUG=webfront:* node ./bin/www",
+    "start": "node ./bin/www | bunyan",
     "dev": "webpack-dev-server --config ./webpack.config.dev.js",
     "build": "webpack --config ./webpack.config.prod.js",
     "test": "rm -rf reports && jest",
     "mockserver": "json-server --port 5000 --watch mocks/db.json"
   },
   "dependencies": {
+    "bunyan": "^1.8.12",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
+    "dotenv": "^6.0.0",
     "express": "~4.16.0",
     "hbs": "~4.0.1",
     "http-errors": "~1.6.2",

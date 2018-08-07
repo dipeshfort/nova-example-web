@@ -3,9 +3,10 @@
 /**
  * Module dependencies.
  */
-
+require('dotenv').config()
+require('../configEnv').config();
 var app = require('../app');
-var debug = require('debug')('webfront:server');
+var debug = require('debug')(process.env.APPLICATION_NAME);
 var http = require('http');
 
 /**
