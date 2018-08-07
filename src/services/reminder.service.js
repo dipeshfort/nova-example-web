@@ -1,16 +1,15 @@
+import { ReminderFactory } from "../factories/reminder.factory";
 
-import { dateFormat } from '../utils';
-const REMINDERS_API = 'http://localhost:5000/reminders';
+//const SERVICE_REMINDER_API = 'http://localhost:5001/reminders';
 
 export class ReminderService {
     static async fetchAll() {
-        const reminders = await fetch(REMINDERS_API).then((resp) => {
+        const reminders = await fetch(SERVICE_REMINDER_API).then((resp) => {
             return resp.json()
         });
 
-        this.reminders = reminders.map((reminder) => {
-            reminder.remindDate = dateFormat(new Date(reminder.remindDate));
-            return reminder;
+        this.reminders = reminders.map((reminderApiData) => {
+            return ReminderFactory.create(reminderApiData);
         });
         return Promise.resolve(this.reminders);
     }
@@ -21,42 +20,47 @@ export class ReminderService {
             status: "OPEN",
             created: new Date()
         };
-        const api = REMINDERS_API;
+        const api = SERVICE_REMINDER_API;
         console.info(`Creating reminder ${api}`);
-        return await fetch(api, {
+        const resp = await fetch(api, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
             body: JSON.stringify(data)
-        }).then(resp => resp.json());
+        })
+        const reminderApiData = await resp.json();
+        return ReminderFactory.create(reminderApiData);
     }
 
     static async update(reminderId, reminderData) {
         const data = {
             ...reminderData,
         };
-        const api = `${REMINDERS_API}/${reminderId}`;
+        const api = `${SERVICE_REMINDER_API}/${reminderId}`;
         console.info(`Updating ${api}`, reminderData);
-        return await fetch(api, {
+        const resp = await fetch(api, {
             method: 'PATCH',
             cache: 'no-cache',
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
             body: JSON.stringify(data)
-        }).then(resp => resp.json());
+        });
+        const reminderApiData = await resp.json();
+        return ReminderFactory.create(reminderApiData);
     }
     static async delete(reminderId) {
-        const api = `${REMINDERS_API}/${reminderId}`;
+        const api = `${SERVICE_REMINDER_API}/${reminderId}`;
         console.info(`Deleting ${api}`);
-        return await fetch(api, {
+        const resp = await fetch(api, {
             method: 'DELETE',
             cache: 'no-cache',
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             }
-        }).then(resp => resp.json());
+        });
+        return resp.status === 204;
     }
 }

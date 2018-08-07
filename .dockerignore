@@ -3,10 +3,3 @@
 .env
 Dockerfile
 .dockerignore
-.babelrc
-
-src
-templates
-.babelrc
-jest.config.js
-webpack*

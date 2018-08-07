@@ -7,18 +7,21 @@ const webpackMerge = require('webpack-merge');
 const globalConfig = require('./webpack.config.global');
 
 process.env.NODE_ENV = 'development';
-
-module.exports = webpackMerge(globalConfig, {
+const config = webpackMerge(globalConfig, {
     mode: "development",
     entry: ['./src/main.js'],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'app.js'
     },
-    plugins: [htmlWebpackPlugin],
+    plugins: [
+        htmlWebpackPlugin
+    ],
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         port: 3001,
         historyApiFallback: true
     }
 });
+
+module.exports = config;

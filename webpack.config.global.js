@@ -1,3 +1,6 @@
+const webpack = require('webpack');
+require('dotenv').config();
+
 module.exports = {
     mode: "development",
     module: {
@@ -18,5 +21,10 @@ module.exports = {
     },
     resolve: {
         extensions: [".js", ".jsx"]
-    }
+    },
+    plugins: [
+        new webpack.DefinePlugin({
+            'SERVICE_REMINDER_API': JSON.stringify(process.env.SERVICE_REMINDER_API)
+        })
+    ]
 }
