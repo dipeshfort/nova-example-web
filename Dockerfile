@@ -12,6 +12,7 @@ WORKDIR /data/app
 COPY . .
 
 RUN npm --version \
+    && npm install \
     && npm run build
 
 EXPOSE 3000
