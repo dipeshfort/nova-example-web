@@ -3,6 +3,7 @@
   "title": "Reminder Web",
   "version": "1.0.0",
   "private": true,
+  "main": "/bin/www",
   "scripts": {
     "clean": "rimraf dist",
     "start": "node ./bin/www | bunyan",
