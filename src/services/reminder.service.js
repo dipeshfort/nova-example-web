@@ -1,10 +1,10 @@
 import { ReminderFactory } from "../factories/reminder.factory";
 
-//const SERVICE_REMINDER_API = 'http://localhost:5001/reminders';
+const SERVICE_INVOICE_API = `${SERVICE_INVOICE}/invoices`;
 
 export class ReminderService {
     static async fetchAll() {
-        const reminders = await fetch(SERVICE_REMINDER_API).then((resp) => {
+        const reminders = await fetch(SERVICE_INVOICE_API).then((resp) => {
             return resp.json()
         });
 
@@ -20,7 +20,7 @@ export class ReminderService {
             status: "OPEN",
             created: new Date()
         };
-        const api = SERVICE_REMINDER_API;
+        const api = SERVICE_INVOICE_API;
         console.info(`Creating reminder ${api}`);
         const resp = await fetch(api, {
             method: 'POST',
@@ -38,7 +38,7 @@ export class ReminderService {
         const data = {
             ...reminderData,
         };
-        const api = `${SERVICE_REMINDER_API}/${reminderId}`;
+        const api = `${SERVICE_INVOICE_API}/${reminderId}`;
         console.info(`Updating ${api}`, reminderData);
         const resp = await fetch(api, {
             method: 'PATCH',
@@ -52,7 +52,7 @@ export class ReminderService {
         return ReminderFactory.create(reminderApiData);
     }
     static async delete(reminderId) {
-        const api = `${SERVICE_REMINDER_API}/${reminderId}`;
+        const api = `${SERVICE_INVOICE_API}/${reminderId}`;
         console.info(`Deleting ${api}`);
         const resp = await fetch(api, {
             method: 'DELETE',

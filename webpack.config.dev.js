@@ -20,12 +20,13 @@ const config = webpackMerge(globalConfig, {
     plugins: [
         htmlWebpackPlugin,
         new webpack.DefinePlugin({
-            'SERVICE_REMINDER_API': JSON.stringify(process.env.SERVICE_REMINDER_API)
+            'SERVICE_INVOICE': JSON.stringify(process.env.SERVICE_INVOICE),
+            'SERVICE_USER': JSON.stringify(process.env.SERVICE_USER)
         })
     ],
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
-        port: 3001,
+        port: process.env.PORT,
         historyApiFallback: true
     }
 });

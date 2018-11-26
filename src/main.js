@@ -25,6 +25,17 @@ const store = createStore(allReducers, applyMiddleware(
     thunkMiddleware
 ));
 
+try {
+    const user = JSON.parse(localStorage.getItem('user'));
+    store.dispatch({
+        type: 'SET_USER',
+        payload: user
+    })
+} catch(err) {
+    console.log("ERROR parsing user", err);
+    // ignore
+}
+
 ReminderService.fetchAll().then((reminders) => {
     store.dispatch({
         type: 'RECEIVE_REMINDERS',

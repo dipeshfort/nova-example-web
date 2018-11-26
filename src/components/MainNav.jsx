@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const navStyle = {
     marginBottom: "15px"
 };
-export const MainNav = () => {
+
+export const _MainNav = ({user, logout}) => {
     return (
         <nav style={navStyle} className="navbar navbar-expand-sm navbar-dark bg-dark">
             <Link className="navbar-brand" to="/">Reminder</Link>
@@ -20,14 +22,74 @@ export const MainNav = () => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item">
-                        <NavLink activeClassName="active" className="nav-link" exact to={"/"}>Dashboard</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink activeClassName="active" className="nav-link" to={"/reminders/create"}>Add</NavLink>
-                    </li>
+                { user && (
+                    <React.Fragment>
+                        <li className="nav-item">
+                            <NavLink activeClassName="active" className="nav-link" exact to={"/"}>Dashboard</NavLink>
+                        </li>
+                        { isAdmin(user) && (
+                            <li className="nav-item">
+                                <NavLink activeClassName="active" className="nav-link" to={"/reminders/create"}>Add Invoice</NavLink>
+                            </li>
+                        )}
+                        <li className="nav-item">
+                            
+                        </li>
+                    </React.Fragment>
+                )}
+                { !user && (
+                    <React.Fragment>
+                        <li className="nav-item">
+                            <NavLink activeClassName="active" className="nav-link" exact to={"/signup"}>Signup</NavLink>
+                        </li>
+                    </React.Fragment>
+                )}
                 </ul>
+                { user && (
+                    <div style={{
+                        color: "white",
+                        display: "flex",
+                        flexDirection: "column"
+                    }}>
+                        <span>
+                            <span style={{
+                                fontSize: "0.7em"
+                            }}>
+                                { isAdmin(user)? '(' + user.role.toLowerCase() + ') ': ''}
+                            </span>
+                            <span>{user.firstname}</span>
+                        </span>
+                        <a onClick={() => logout()} style={{
+                            cursor: "pointer",
+                            color: "white",
+                            textAlign: "center",
+                            fontSize: "0.8em"
+                        }}>Logout</a>
+                    </div>
+                )}
             </div>
         </nav>
     );
 };
+
+function isAdmin(user) {
+    return user && user.role === 'ADMIN';
+}
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        logout: () => {
+            dispatch({
+                type: 'LOGOUT'
+            })
+        }
+    }
+}
+
+export const MainNav = connect(mapStateToProps, mapDispatchToProps)(_MainNav);
+

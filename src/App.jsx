@@ -6,12 +6,14 @@ import {
 import { MainNav } from './components/MainNav';
 
 // Components
+import { ProtectedRoute } from './protected-route';
 import { ReminderDetails } from './components/ReminderDetails';
 import { ReminderCreate } from './components/ReminderCreate';
-
 import { Dashboard } from './components/Dashboard';
+import { SignUp } from './components/SignUp';
+import { Login } from './components/Login';
 
-export const App = () => {
+export const App = (props) => {
     return (
         <React.Fragment>
         <main>
@@ -19,8 +21,13 @@ export const App = () => {
             <Switch>
                 <Route 
                     exact
-                    path='/' 
-                    render={() => <Dashboard />}
+                    path='/signup' 
+                    component={ SignUp } 
+                />
+                <Route 
+                    exact
+                    path='/login' 
+                    component={ Login } 
                 />
                 <Route 
                     exact
@@ -30,6 +37,10 @@ export const App = () => {
                 <Route 
                     path='/reminders/:id'
                     component = { ReminderDetails }
+                />
+                <ProtectedRoute
+                    path='/'
+                    component={ Dashboard }
                 />
             </Switch>
         </main>

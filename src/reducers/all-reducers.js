@@ -1,8 +1,6 @@
 
 import { combineReducers  } from "redux";
-import {
-    ReminderService
-} from '../services/reminder.service';
+import { userReducer } from "./user.reducer";
 
 export const allReducers = combineReducers({
     reminders: (state = [], action) => {
@@ -18,9 +16,9 @@ export const allReducers = combineReducers({
                 const removeId = action.payload;
                 return state.filter((r) => r.id !== removeId);
         }
-
         return state;
-    }
+    },
+    user: userReducer
 });
 
 function update(reminders, updatedReminder) {

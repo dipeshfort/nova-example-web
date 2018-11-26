@@ -19,7 +19,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  res.locals.SERVICE_REMINDER_API = process.env.SERVICE_REMINDER_API;
+  res.locals.SERVICE_INVOICE = process.env.SERVICE_INVOICE;
+  res.locals.SERVICE_USER = process.env.SERVICE_USER;
   next();
 });
 app.use('/', indexRouter);
