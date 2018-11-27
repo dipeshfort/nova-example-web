@@ -3,7 +3,7 @@ import {
     Route, Switch
 } from 'react-router-dom';
 
-import { MainNav } from './components/MainNav';
+import { Header } from './components/Header';
 
 // Components
 import { ProtectedRoute } from './protected-route';
@@ -12,12 +12,13 @@ import { ReminderCreate } from './components/ReminderCreate';
 import { Dashboard } from './components/Dashboard';
 import { SignUp } from './components/SignUp';
 import { Login } from './components/Login';
+import { Invoices } from './components/Invoices';
 
 export const App = (props) => {
     return (
         <React.Fragment>
         <main>
-            <MainNav />
+            <Header />
             <Switch>
                 <Route 
                     exact
@@ -29,12 +30,17 @@ export const App = (props) => {
                     path='/login' 
                     component={ Login } 
                 />
-                <Route 
+                <ProtectedRoute 
+                    exact
+                    path='/invoices' 
+                    component={ Invoices } 
+                />
+                <ProtectedRoute 
                     exact
                     path='/invoices/create' 
                     component = { ReminderCreate }
                 />
-                <Route 
+                <ProtectedRoute 
                     path='/invoices/:id'
                     component = { ReminderDetails }
                 />

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export class DashboardTime extends Component {
+export class CurrentTime extends Component {
     constructor(props) {
         super(props);
         this.state = {
