@@ -60,7 +60,9 @@ export class UserService {
                 "Authorization": `Bearer ${token}`
             }
         })
-        return await resp.json();
+        const users = await resp.json();
+        return users.filter((user) => user.role !== 'ADMIN');
+        
     }
 
 }

@@ -72,7 +72,7 @@ class _ReminderCreate extends Component {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="title">Title*</label>
+                        <label htmlFor="title">Product</label>
                         <input
                             className="form-control"
                             id="title"
@@ -85,7 +85,7 @@ class _ReminderCreate extends Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="remindDate">Remind date*</label>
+                        <label htmlFor="remindDate">Due date</label>
                         <input 
                             className="form-control" 
                             min={ this.state.reminder.minremindDate } 
