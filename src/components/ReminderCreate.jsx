@@ -3,6 +3,7 @@ import { dateFormat } from '../utils';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ReminderService } from "../services/reminder.service";
+import { UserService } from '../services/user.service';
 
 class _ReminderCreate extends Component {
     constructor(props) {
@@ -14,8 +15,10 @@ class _ReminderCreate extends Component {
                 title: '',
                 comments: '',
                 amount: 0,
-                remindDate: todayStr
+                remindDate: todayStr,
+                userId: '',
             },
+            users: [],
             error: null
         }
 
@@ -23,15 +26,22 @@ class _ReminderCreate extends Component {
         this.save = this.save.bind(this);
     }
 
+    async componentDidMount() {
+        const users = await UserService.fetchUsers(this.props.user.token);
+        this.setState({
+            users
+        });
+    }
+
     save(event) {
         event.preventDefault();
-        ReminderService.create(this.state.reminder).then((reminder) => {
+        ReminderService.create(this.props.user.token, this.state.reminder).then((reminder) => {
             this.props.addReminder(reminder);
             this.props.history.push('/');
         }).catch((err) => {
-            console.error(err);
-            this.state.set({
-                error: err
+            console.error("Error creating invoice", err);
+            this.setState({
+                error: err.message || err.toString() 
             })
         });
     }
@@ -48,9 +58,19 @@ class _ReminderCreate extends Component {
     }
 
     render() {
+        const { users } = this.state;
         return (
             <section className="container">
                 <form onSubmit={this.save}>
+                    <div className="form-group">
+                        <label htmlFor="title">User</label>
+                        <select name="userId" value={this.state.reminder.userId} className="custom-select" onChange={this.handleChange}>>
+                            <option>Select user</option>
+                            { users.map((user) => {
+                                return <option key={user.id} value={user.id}>{user.firstname} {user.lastname} ({user.email})</option>
+                            }) }
+                        </select>
+                    </div>
                     <div className="form-group">
                         <label htmlFor="title">Title*</label>
                         <input
@@ -114,7 +134,11 @@ class _ReminderCreate extends Component {
     }
 }
 
-
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
 const mapDispatchToProps = (dispatch) => {
     return {
        addReminder: (reminder) => {
@@ -125,5 +149,5 @@ const mapDispatchToProps = (dispatch) => {
        }
     }
 }
-export const ReminderCreate = connect(null, mapDispatchToProps)(_ReminderCreate);
+export const ReminderCreate = connect(mapStateToProps, mapDispatchToProps)(_ReminderCreate);
 

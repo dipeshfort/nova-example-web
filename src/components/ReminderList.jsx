@@ -56,7 +56,7 @@ export const ReminderList = (props) => {
                                     <tspan fill="purple" className="text-date">{ reminder.remindDate }</tspan>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <Link style={{textDecoration: "none"}} 
-                                        to={`/reminders/${reminder.id}`}>
+                                        to={`/invoices/${reminder.id}`}>
                                         <tspan fontSize="20" fill="black" >
                                             <tspan>{reminder.title}</tspan>
                                             &nbsp;&nbsp;

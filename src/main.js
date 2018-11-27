@@ -27,21 +27,23 @@ const store = createStore(allReducers, applyMiddleware(
 
 try {
     const user = JSON.parse(localStorage.getItem('user'));
-    store.dispatch({
-        type: 'SET_USER',
-        payload: user
-    })
+    if (user) {
+        store.dispatch({
+            type: 'SET_USER',
+            payload: user
+        });
+        ReminderService.fetchInvoices(user).then((reminders) => {
+            store.dispatch({
+                type: 'RECEIVE_REMINDERS',
+                payload: reminders
+            })
+        });
+    }
 } catch(err) {
     console.log("ERROR parsing user", err);
     // ignore
 }
 
-ReminderService.fetchAll().then((reminders) => {
-    store.dispatch({
-        type: 'RECEIVE_REMINDERS',
-        payload: reminders
-    })
-});
 
 // ======== /REDUX ===========
 

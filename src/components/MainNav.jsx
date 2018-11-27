@@ -6,7 +6,7 @@ const navStyle = {
     marginBottom: "15px"
 };
 
-export const _MainNav = ({user, logout}) => {
+export const _MainNav = ({user, logout }) => {
     return (
         <nav style={navStyle} className="navbar navbar-expand-sm navbar-dark bg-dark">
             <Link className="navbar-brand" to="/">Reminder</Link>
@@ -29,7 +29,7 @@ export const _MainNav = ({user, logout}) => {
                         </li>
                         { isAdmin(user) && (
                             <li className="nav-item">
-                                <NavLink activeClassName="active" className="nav-link" to={"/reminders/create"}>Add Invoice</NavLink>
+                                <NavLink activeClassName="active" className="nav-link" to={"/invoices/create"}>Add Invoice</NavLink>
                             </li>
                         )}
                         <li className="nav-item">
@@ -59,7 +59,10 @@ export const _MainNav = ({user, logout}) => {
                             </span>
                             <span>{user.firstname}</span>
                         </span>
-                        <a onClick={() => logout()} style={{
+                        <a onClick={() => {
+                            logout();
+                            window.location.href = '/';
+                        }} style={{
                             cursor: "pointer",
                             color: "white",
                             textAlign: "center",
@@ -86,7 +89,7 @@ const mapDispatchToProps = (dispatch) => {
         logout: () => {
             dispatch({
                 type: 'LOGOUT'
-            })
+            });
         }
     }
 }

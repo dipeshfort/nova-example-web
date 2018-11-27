@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { UserService } from "../services/user.service";
+import { ReminderService } from "../services/reminder.service";
 
 class _Login extends Component {
     constructor(props) {
@@ -19,10 +20,15 @@ class _Login extends Component {
         event.preventDefault();
         UserService.login(this.state.credentials).then(async (resp) => {
             if (resp.token) {
-                const user = await UserService.fetchUser(resp.token)
-                this.props.setUser({
-                    ...user,
+                const profile = await UserService.fetchUser(resp.token);
+                const user = {
+                    ...profile, 
                     token: resp.token
+                };
+
+                this.props.setUser(user);
+                ReminderService.fetchInvoices(user).then((invoices) => {
+                    this.props.setInvoices(invoices);
                 });
                 this.props.history.push('/');
             } else if (resp.code && resp.message) {
@@ -117,6 +123,12 @@ const mapDispatchToProps = (dispatch) => {
                 type: 'SET_USER',
                 payload: user
             });
+        },
+        setInvoices: (invoices) => {
+            dispatch({
+                type: 'RECEIVE_REMINDERS',
+                payload: invoices
+            })
         }
     }
 }

@@ -46,4 +46,21 @@ export class UserService {
         return await resp.json();
     }
 
+    static async fetchUsers(token) {
+        const api = `${SERVICE_USER}/users`;
+        console.info('Fetching all users', {
+            api,
+            token,
+        });
+        const resp = await fetch(api, {
+            method: 'GET',
+            cache: 'no-cache',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        return await resp.json();
+    }
+
 }

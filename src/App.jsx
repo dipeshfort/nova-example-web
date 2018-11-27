@@ -31,11 +31,11 @@ export const App = (props) => {
                 />
                 <Route 
                     exact
-                    path='/reminders/create' 
+                    path='/invoices/create' 
                     component = { ReminderCreate }
                 />
                 <Route 
-                    path='/reminders/:id'
+                    path='/invoices/:id'
                     component = { ReminderDetails }
                 />
                 <ProtectedRoute
