@@ -1,9 +1,12 @@
 
-import React from 'react';
+import * as React from 'React';
 import { render } from 'react-dom';
 import {
     BrowserRouter
 } from 'react-router-dom';
+import './styles.css';
+import { App } from './app.component';
+import { InvoiceService } from './services/invoice.service';
 
 // ==========================
 // ======== REDUX ===========
@@ -26,13 +29,13 @@ const store = createStore(allReducers, applyMiddleware(
 ));
 
 try {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
     if (user) {
         store.dispatch({
             type: 'SET_USER',
             payload: user
         });
-        InvoiceService.fetchInvoices(user).then((invoices) => {
+        InvoiceService.fetchInvoices(user).then((invoices: any[]) => {
             store.dispatch({
                 type: 'RECEIVE_REMINDERS',
                 payload: invoices
@@ -46,12 +49,6 @@ try {
 
 
 // ======== /REDUX ===========
-
-import './styles.css';
-import {
-    App
-} from './app.component';
-import { InvoiceService } from './services/invoice.service';
 
 render((
     <Provider store={store}>

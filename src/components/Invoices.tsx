@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import * as React from 'react';
+import { Component } from 'react';
 import { InvoiceList } from './InvoiceList';
 import { connect } from 'react-redux';
 import { InvoiceService } from "../services/invoice.service";
@@ -6,7 +7,7 @@ import { InvoiceService } from "../services/invoice.service";
 // Styles
 import './Invoices.css';
 
-class _Invoices extends Component {
+class _Invoices extends Component<any, any> {
 
     render() {
         return (
@@ -24,17 +25,17 @@ class _Invoices extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: { invoices: any[]}) => {
     return {
         open: state.invoices.filter((invoice) => invoice.status === 'OPEN'),
         closed: state.invoices.filter((invoice) => invoice.status === 'CLOSED')
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: (data: any) => void) => {
     return {
-        markClosed: (invoiced) => {
-            InvoiceService.update(invoiced, {
+        markClosed: (invoice: any) => {
+            InvoiceService.update(invoice, {
                 status: 'CLOSED'
             }).then((updatedInvoice) => {
                 dispatch({
@@ -43,8 +44,8 @@ const mapDispatchToProps = (dispatch) => {
                 });
             });
         },
-        markOpen: (invoiced) => {
-            InvoiceService.update(invoiced, {
+        markOpen: (invoice: any) => {
+            InvoiceService.update(invoice, {
                 status: 'OPEN'
             }).then((updatedInvoice) => {
                 dispatch({

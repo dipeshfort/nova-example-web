@@ -7,10 +7,11 @@ process.env.NODE_ENV = 'production';
 module.exports = webpackMerge(globalConfig, {
     mode: "production",
     entry: {
-        'app': './src/app.js'
+        app: './src/app.js'
     },
     output: {
         path: path.resolve(__dirname, 'public'),
+        filename: 'app.js'
     },
     optimization: {
         minimizer: [

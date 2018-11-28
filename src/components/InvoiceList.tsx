@@ -1,9 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-export const InvoiceList = (props) => {
+export const InvoiceList = (props: any) => {
     // Sort by dueDate ascending and createDate decending
-    const invoices = props.invoices.sort((a, b) => {
+    const invoices = props.invoices.sort((a: any, b: any) => {
         if (a.remindDate === b.remindDate) {
             if (a.created === b.created) {
                 return 0;
@@ -37,7 +37,7 @@ export const InvoiceList = (props) => {
                 fill="purple"
                 xmlns="http://www.w3.org/2000/svg">
                 <g transform="translate(0, 5)">
-                {invoices.map((invoice, index) => {
+                {invoices.map((invoice: any, index: number) => {
                     const posX = 2;
                     const posY = index * 40;
                     const prevPosY = ((index - 1) * 40) + 21;

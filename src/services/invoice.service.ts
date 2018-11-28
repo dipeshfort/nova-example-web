@@ -1,9 +1,11 @@
 import { InvoiceFactory } from "../factories/invoice.factory";
 
+declare const SERVICE_INVOICE: string;
+
 const SERVICE_INVOICE_API = `${SERVICE_INVOICE}/invoices`;
 
 export class InvoiceService {
-    static async fetchInvoices(user) {
+    static async fetchInvoices(user: any) {
         if (user.role === "ADMIN") {
             return await this.fetchAll(user.token);
         } else {
@@ -11,9 +13,9 @@ export class InvoiceService {
         }
     }
 
-    static async fetchUserInvoice(token) {
+    static async fetchUserInvoice(token: string) {
         const api = `${ SERVICE_INVOICE }/user-invoices`
-        const invoice = await fetch(api, {
+        const resp = await fetch(api, {
             method: 'GET',
             cache: 'no-cache',
             headers: {
@@ -24,15 +26,15 @@ export class InvoiceService {
             return resp.json()
         });
 
-        this.invoice = invoice.map((invoiceData) => {
+        const invoices: any = resp.map((invoiceData: any) => {
             return InvoiceFactory.create(invoiceData);
         });
-        return Promise.resolve(this.invoice);
+        return Promise.resolve(invoices);
     }
 
-    static async fetchAll(token) {
+    static async fetchAll(token: string) {
         const api = `${SERVICE_INVOICE}/invoices`
-        const invoice = await fetch(api, {
+        const resp = await fetch(api, {
             method: 'GET',
             cache: 'no-cache',
             headers: {
@@ -43,13 +45,13 @@ export class InvoiceService {
             return resp.json()
         });
 
-        this.invoice = invoice.map((invoiceData) => {
+        const invoices: any = resp.map((invoiceData: any) => {
             return InvoiceFactory.create(invoiceData);
         });
-        return Promise.resolve(this.invoice);
+        return Promise.resolve(invoices);
     }
 
-    static async create(token, invoice) {
+    static async create(token: string, invoice: any) {
         const data = {
             ...invoice,
             status: "OPEN",
@@ -74,7 +76,7 @@ export class InvoiceService {
         return InvoiceFactory.create(invoiceData);
     }
 
-    static async update(invoiceId, updateData) {
+    static async update(invoiceId: string, updateData: any) {
         const data = {
             ...updateData,
         };
@@ -91,7 +93,7 @@ export class InvoiceService {
         const invoiceData = await resp.json();
         return InvoiceFactory.create(invoiceData);
     }
-    static async delete(invoiceId) {
+    static async delete(invoiceId: string) {
         const api = `${SERVICE_INVOICE_API}/${invoiceId}`;
         console.info(`Deleting ${api}`);
         const resp = await fetch(api, {

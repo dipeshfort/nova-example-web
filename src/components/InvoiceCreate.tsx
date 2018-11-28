@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import * as React from 'react';
+import { Component } from 'react';
 import { dateFormat } from '../utils';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { InvoiceService } from "../services/invoice.service";
 import { UserService } from '../services/user.service';
 
-class _InvoiceCreate extends Component {
-    constructor(props) {
+class _InvoiceCreate extends Component<any, any> {
+    constructor(props: any) {
         super(props);
         const todayStr = dateFormat(new Date());
         this.state = {
@@ -33,7 +34,7 @@ class _InvoiceCreate extends Component {
         });
     }
 
-    save(event) {
+    save(event: any) {
         event.preventDefault();
         InvoiceService.create(this.props.user.token, this.state.invoice).then((invoice) => {
             this.props.addInvoice(invoice);
@@ -46,11 +47,11 @@ class _InvoiceCreate extends Component {
         });
     }
 
-    handleChange(event) {
+    handleChange(event: any) {
         const field = event.target.name;
         const value = event.target.value;
 
-        this.setState((prevState) => {
+        this.setState((prevState: any) => {
             const state = prevState;
             state.invoice[field] = value;
             return state;
@@ -66,7 +67,7 @@ class _InvoiceCreate extends Component {
                         <label htmlFor="title">User</label>
                         <select name="userId" value={this.state.invoice.userId} className="custom-select" onChange={this.handleChange}>>
                             <option>Select user</option>
-                            { users.map((user) => {
+                            {users.map((user: any) => {
                                 return <option key={user.id} value={user.id}>{user.firstname} {user.lastname} ({user.email})</option>
                             }) }
                         </select>
@@ -112,7 +113,6 @@ class _InvoiceCreate extends Component {
                     <div className="form-group">
                         <label htmlFor="comments">Comments</label>
                         <textarea className="form-control"
-                            className="form-control"
                             id="comments"
                             name="comments"
                             onChange={this.handleChange}
@@ -134,14 +134,14 @@ class _InvoiceCreate extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
     return {
         user: state.user
     }
 }
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: any) => {
     return {
-       addInvoice: (invoice) => {
+        addInvoice: (invoice: any) => {
             dispatch({
                type: 'ADD_REMINDER',
                payload: invoice

@@ -5,6 +5,15 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.tsx?$/,
+                loader: 'awesome-typescript-loader'
+            },
+            { 
+                enforce: "pre", 
+                test: /\.js$/, 
+                loader: "source-map-loader" 
+            },
+            {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader'
@@ -19,6 +28,10 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: [".js", ".jsx"]
+        extensions: [".ts", ".tsx", ".js", ".json", ".jsx"]
+    },
+    externals: {
+        "react": "React",
+        "react-dom": "ReactDOM"
     }
 }

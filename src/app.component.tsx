@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
     Route, Switch
 } from 'react-router-dom';
@@ -14,7 +14,7 @@ import { SignUp } from './components/SignUp';
 import { Login } from './components/Login';
 import { Invoices } from './components/Invoices';
 
-export const App = (props) => {
+export const App = (props: any) => {
     return (
         <React.Fragment>
         <main>
@@ -46,7 +46,7 @@ export const App = (props) => {
                 />
                 <ProtectedRoute
                     path='/'
-                    component={ Dashboard }
+                    component={ Dashboard  }
                 />
             </Switch>
         </main>

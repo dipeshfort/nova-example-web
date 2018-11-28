@@ -1,5 +1,5 @@
 
-export const invoicesReducer = (state = [], action) => {
+export const invoicesReducer = (state: any[] = [], action: { type: string, payload: any}) => {
     switch (action.type) {
         case 'RECEIVE_REMINDERS':
             return action.payload;
@@ -15,7 +15,7 @@ export const invoicesReducer = (state = [], action) => {
     return state;
 }
 
-function update(invoices, updatedInvoice) {
+function update(invoices: any[], updatedInvoice: any) {
     return invoices.map((invoice) => {
         if (invoice.id !== updatedInvoice.id) {
             return invoice;

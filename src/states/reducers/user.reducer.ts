@@ -1,5 +1,5 @@
 
-export const userReducer = (state = null, action) => {
+export const userReducer = (state = null, action: any) => {
     switch (action.type) {
         case 'SET_USER':
             localStorage.setItem('user', JSON.stringify(action.payload));

@@ -17,6 +17,7 @@ const config = webpackMerge(globalConfig, {
         path: path.resolve(__dirname, 'dist'),
         filename: 'app.js'
     },
+    devtool: "source-map",
     plugins: [
         htmlWebpackPlugin,
         new webpack.DefinePlugin({
@@ -25,9 +26,13 @@ const config = webpackMerge(globalConfig, {
         })
     ],
     devServer: {
-        contentBase: path.join(__dirname, 'dist'),
+        contentBase: [
+            path.join(__dirname, 'dist'), 
+            path.join(__dirname, 'node_modules/react/umd/'),
+            path.join(__dirname, 'node_modules/react-dom/umd/')
+        ],
         port: process.env.PORT,
-        historyApiFallback: true
+        historyApiFallback: true,
     }
 });
 

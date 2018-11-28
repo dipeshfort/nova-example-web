@@ -8,11 +8,19 @@
     "clean": "rimraf dist",
     "start": "node ./bin/www | bunyan",
     "dev": "webpack-dev-server --config ./webpack.config.dev.js",
+    "build:dev": "webpack --config ./webpack.config.dev.js",
     "build": "webpack --config ./webpack.config.prod.js",
     "test": "rm -rf reports && jest",
     "mockserver": "json-server --port 5000 --watch mocks/db.json"
   },
   "dependencies": {
+    "@types/react": "^16.7.7",
+    "@types/react-dom": "^16.0.11",
+    "@types/react-redux": "^6.0.10",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
+    "@types/uuid": "^3.4.4",
     "bunyan": "^1.8.12",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
@@ -25,6 +33,7 @@
     "react-dom": "^16.4.1"
   },
   "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -41,7 +50,9 @@
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "rimraf": "^2.6.2",
+    "source-map-loader": "^0.2.4",
     "style-loader": "^0.21.0",
+    "typescript": "^3.1.6",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "uuid": "^3.3.2",
     "webpack": "^4.16.0",

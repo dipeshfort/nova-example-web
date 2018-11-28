@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import * as React from 'react';
+import { Component } from 'react';
 import { dateFormat } from '../utils';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { InvoiceService } from "../services/invoice.service";
 
-class _InvoiceDetails extends Component {
+class _InvoiceDetails extends Component<any, any> {
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         const todayStr = dateFormat(new Date());
         this.state = {
@@ -24,7 +25,7 @@ class _InvoiceDetails extends Component {
         this.delete = this.delete.bind(this);
     }
 
-    fillInvoice(invoice) {
+    fillInvoice(invoice: any) {
         this.setState({
             disabled: false,
             id: invoice.id,
@@ -40,13 +41,13 @@ class _InvoiceDetails extends Component {
             this.fillInvoice(this.props.invoice);
         }
     }
-    componentWillReceiveProps(props) {
+    componentWillReceiveProps(props: any) {
         if (props.invoice) {
             this.fillInvoice(props.invoice);
         }
     } 
     
-    save(event) {
+    save(event: any) {
         event.preventDefault();
         InvoiceService.update(this.state.id, {
             title: this.state.title,
@@ -75,7 +76,7 @@ class _InvoiceDetails extends Component {
             });
     }
 
-    handleChange(event) {
+    handleChange(event: any) {
         const field = event.target.name;
         const value = event.target.value;
 
@@ -132,7 +133,6 @@ class _InvoiceDetails extends Component {
                     <div className="form-group">
                         <label htmlFor="comments">Comments</label>
                         <textarea className="form-control"
-                            className="form-control"
                             disabled={this.state.disabled}
                             id="comments"
                             name="comments"
@@ -156,20 +156,20 @@ class _InvoiceDetails extends Component {
     }
 }
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state: any, props: any) => {
     return {
-        invoice: state.invoices.find(r => r.id === props.match.params.id)
+        invoice: state.invoices.find((r: any) => r.id === props.match.params.id)
     }
 }
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: any) => {
     return {
-        updateInvoice: (invoice) => {
+        updateInvoice: (invoice: any) => {
             dispatch({
                 type: 'UPDATE_REMINDER',
                 payload: invoice
             })
         },
-        removeInvoice: (invoiceId) => {
+        removeInvoice: (invoiceId: string) => {
             dispatch({
                 type: 'REMOVE_REMINDER',
                 payload: invoiceId

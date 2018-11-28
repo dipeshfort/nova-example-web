@@ -1,7 +1,14 @@
-import React, { Component } from 'react';
+import * as React from 'react';
+import { Component } from 'react';
 
 export class CurrentTime extends Component {
-    constructor(props) {
+    private stopped: boolean;
+    private lastTime: number;
+    public state: {
+        time: string;
+    };
+
+    constructor(props: any) {
         super(props);
         this.state = {
             time: this.getTimeString()
@@ -48,7 +55,7 @@ export class CurrentTime extends Component {
             fontSize: "1.2em"
         }
         return (
-            <span style={style} className="badge badge-info">
+            <span style={style as React.CSSProperties } className="badge badge-info">
                 {this.state.time}
             </span>
         );

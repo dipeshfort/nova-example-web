@@ -1,6 +1,8 @@
 
+declare const SERVICE_USER: string;
+
 export class UserService {
-    static async create(userdata) {
+    static async create(userdata: any) {
         const api = `${SERVICE_USER}/auth/signup`;
         console.info(`Creating user ${api}`);
         const resp = await fetch(api, {
@@ -15,7 +17,7 @@ export class UserService {
         return user;
     }
 
-    static async login(credentials) {
+    static async login(credentials: any) {
         const api = `${SERVICE_USER}/auth/login`;
         console.info(`Fetching user token ${api}`);
         const resp = await fetch(api, {
@@ -29,7 +31,7 @@ export class UserService {
         return await resp.json();
     }
 
-    static async fetchUser(token) {
+    static async fetchUser(token: string) {
         const api = `${SERVICE_USER}/auth/profile`;
         console.info('Fetching user profile', {
             api,
@@ -46,7 +48,7 @@ export class UserService {
         return await resp.json();
     }
 
-    static async fetchUsers(token) {
+    static async fetchUsers(token: string) {
         const api = `${SERVICE_USER}/users`;
         console.info('Fetching all users', {
             api,
@@ -61,7 +63,7 @@ export class UserService {
             }
         })
         const users = await resp.json();
-        return users.filter((user) => user.role !== 'ADMIN');
+        return users.filter((user: any) => user.role !== 'ADMIN');
         
     }
 
