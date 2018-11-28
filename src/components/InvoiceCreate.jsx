@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import { dateFormat } from '../utils';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ReminderService } from "../services/reminder.service";
+import { InvoiceService } from "../services/invoice.service";
 import { UserService } from '../services/user.service';
 
-class _ReminderCreate extends Component {
+class _InvoiceCreate extends Component {
     constructor(props) {
         super(props);
         const todayStr = dateFormat(new Date());
         this.state = {
             minremindDate: todayStr,
-            reminder: {
+            invoice: {
                 title: '',
                 comments: '',
                 amount: 0,
@@ -35,8 +35,8 @@ class _ReminderCreate extends Component {
 
     save(event) {
         event.preventDefault();
-        ReminderService.create(this.props.user.token, this.state.reminder).then((reminder) => {
-            this.props.addReminder(reminder);
+        InvoiceService.create(this.props.user.token, this.state.invoice).then((invoice) => {
+            this.props.addInvoice(invoice);
             this.props.history.push('/');
         }).catch((err) => {
             console.error("Error creating invoice", err);
@@ -52,7 +52,7 @@ class _ReminderCreate extends Component {
 
         this.setState((prevState) => {
             const state = prevState;
-            state.reminder[field] = value;
+            state.invoice[field] = value;
             return state;
         });
     }
@@ -64,7 +64,7 @@ class _ReminderCreate extends Component {
                 <form onSubmit={this.save}>
                     <div className="form-group">
                         <label htmlFor="title">User</label>
-                        <select name="userId" value={this.state.reminder.userId} className="custom-select" onChange={this.handleChange}>>
+                        <select name="userId" value={this.state.invoice.userId} className="custom-select" onChange={this.handleChange}>>
                             <option>Select user</option>
                             { users.map((user) => {
                                 return <option key={user.id} value={user.id}>{user.firstname} {user.lastname} ({user.email})</option>
@@ -81,19 +81,19 @@ class _ReminderCreate extends Component {
                             placeholder="Enter title"
                             required 
                             type="text"
-                            value={this.state.reminder.title}
+                            value={this.state.invoice.title}
                         />
                     </div>
                     <div className="form-group">
                         <label htmlFor="remindDate">Due date</label>
                         <input 
                             className="form-control" 
-                            min={ this.state.reminder.minremindDate } 
+                            min={ this.state.invoice.minremindDate } 
                             name="remindDate" 
                             onChange={this.handleChange } 
                             required
                             type="date" id="remindDate" 
-                            value={this.state.reminder.remindDate}
+                            value={this.state.invoice.remindDate}
                         />
                     </div>
                     <div className="form-group">
@@ -106,7 +106,7 @@ class _ReminderCreate extends Component {
                             onChange={this.handleChange }
                             step="0.25"
                             type="number"
-                            value={this.state.reminder.amount}
+                            value={this.state.invoice.amount}
                         />
                     </div>
                     <div className="form-group">
@@ -117,7 +117,7 @@ class _ReminderCreate extends Component {
                             name="comments"
                             onChange={this.handleChange}
                             placeholder="Comments" 
-                            value={this.state.reminder.comments}
+                            value={this.state.invoice.comments}
                         />
                     </div>
                     <div className="row">
@@ -141,13 +141,13 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-       addReminder: (reminder) => {
+       addInvoice: (invoice) => {
             dispatch({
                type: 'ADD_REMINDER',
-               payload: reminder
+               payload: invoice
             });
        }
     }
 }
-export const ReminderCreate = connect(mapStateToProps, mapDispatchToProps)(_ReminderCreate);
+export const InvoiceCreate = connect(mapStateToProps, mapDispatchToProps)(_InvoiceCreate);
 

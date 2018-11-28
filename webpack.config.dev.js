@@ -12,7 +12,7 @@ require('dotenv').config();
 process.env.NODE_ENV = 'development';
 const config = webpackMerge(globalConfig, {
     mode: "development",
-    entry: ['./src/main.js'],
+    entry: ['./src/app.js'],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'app.js'

@@ -18,7 +18,7 @@ import {
 
 import {
     allReducers
-} from './reducers/all-reducers';
+} from './states/reducers/all-reducers';
 import thunkMiddleware from 'redux-thunk';
 
 const store = createStore(allReducers, applyMiddleware(
@@ -32,10 +32,10 @@ try {
             type: 'SET_USER',
             payload: user
         });
-        ReminderService.fetchInvoices(user).then((reminders) => {
+        InvoiceService.fetchInvoices(user).then((invoices) => {
             store.dispatch({
                 type: 'RECEIVE_REMINDERS',
-                payload: reminders
+                payload: invoices
             })
         });
     }
@@ -50,8 +50,8 @@ try {
 import './styles.css';
 import {
     App
-} from './App';
-import { ReminderService } from './services/reminder.service';
+} from './app.component';
+import { InvoiceService } from './services/invoice.service';
 
 render((
     <Provider store={store}>

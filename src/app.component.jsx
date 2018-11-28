@@ -7,8 +7,8 @@ import { Header } from './components/Header';
 
 // Components
 import { ProtectedRoute } from './protected-route';
-import { ReminderDetails } from './components/ReminderDetails';
-import { ReminderCreate } from './components/ReminderCreate';
+import { InvoiceDetails } from './components/InvoiceDetails';
+import { InvoiceCreate } from './components/InvoiceCreate';
 import { Dashboard } from './components/Dashboard';
 import { SignUp } from './components/SignUp';
 import { Login } from './components/Login';
@@ -38,11 +38,11 @@ export const App = (props) => {
                 <ProtectedRoute 
                     exact
                     path='/invoices/create' 
-                    component = { ReminderCreate }
+                    component = { InvoiceCreate }
                 />
                 <ProtectedRoute 
                     path='/invoices/:id'
-                    component = { ReminderDetails }
+                    component = { InvoiceDetails }
                 />
                 <ProtectedRoute
                     path='/'

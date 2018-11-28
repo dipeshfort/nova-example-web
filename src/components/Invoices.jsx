@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { ReminderList } from './ReminderList';
+import { InvoiceList } from './InvoiceList';
 import { connect } from 'react-redux';
-import { ReminderService } from "../services/reminder.service";
+import { InvoiceService } from "../services/invoice.service";
 
 // Styles
 import './Invoices.css';
@@ -13,10 +13,10 @@ class _Invoices extends Component {
             <section className="container-fluid">
                 <div className="row">
                     <div className="col-sm-12 col-md-6 col-xl-5">
-                        <ReminderList className="list-opened" title={"Open"} onSelect={this.props.markClosed} reminders={this.props.open} />
+                        <InvoiceList className="list-opened" title={"Open"} onSelect={this.props.markClosed} invoices={this.props.open} />
                     </div>
                     <div className="col-sm-12 col-md-6 col-xl-5">
-                        <ReminderList className="list-closed" title={"Paid"} onSelect={this.props.markOpen} reminders={this.props.closed} />
+                        <InvoiceList className="list-closed" title={"Paid"} onSelect={this.props.markOpen} invoices={this.props.closed} />
                     </div>
                 </div>
             </section>
@@ -26,30 +26,30 @@ class _Invoices extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        open: state.reminders.filter((reminder) => reminder.status === 'OPEN'),
-        closed: state.reminders.filter((reminder) => reminder.status === 'CLOSED')
+        open: state.invoices.filter((invoice) => invoice.status === 'OPEN'),
+        closed: state.invoices.filter((invoice) => invoice.status === 'CLOSED')
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        markClosed: (reminderId) => {
-            ReminderService.update(reminderId, {
+        markClosed: (invoiced) => {
+            InvoiceService.update(invoiced, {
                 status: 'CLOSED'
-            }).then((updatedReminder) => {
+            }).then((updatedInvoice) => {
                 dispatch({
                     type: 'UPDATE_REMINDER',
-                    payload: updatedReminder
+                    payload: updatedInvoice
                 });
             });
         },
-        markOpen: (reminderId) => {
-            ReminderService.update(reminderId, {
+        markOpen: (invoiced) => {
+            InvoiceService.update(invoiced, {
                 status: 'OPEN'
-            }).then((updatedReminder) => {
+            }).then((updatedInvoice) => {
                 dispatch({
                     type: 'UPDATE_REMINDER',
-                    payload: updatedReminder
+                    payload: updatedInvoice
                 });
             });
         }

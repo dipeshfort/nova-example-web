@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export const ReminderList = (props) => {
+export const InvoiceList = (props) => {
     // Sort by dueDate ascending and createDate decending
-    const reminders = props.reminders.sort((a, b) => {
+    const invoices = props.invoices.sort((a, b) => {
         if (a.remindDate === b.remindDate) {
             if (a.created === b.created) {
                 return 0;
@@ -14,7 +14,7 @@ export const ReminderList = (props) => {
         return (a.remindDate > b.remindDate)? 1: -1;
     });
     
-    const containerHeight = 41 + (reminders.length * 40);
+    const containerHeight = 41 + (invoices.length * 40);
 
     return (
         <React.Fragment>
@@ -28,7 +28,7 @@ export const ReminderList = (props) => {
             <h3 style={{position: "relative"}}>
                 { props.title }&nbsp;
                 <span style={{fontSize: "0.5em", position: "absolute", top: "0px"}} className="badge badge-info">
-                    {reminders.length}
+                    {invoices.length}
                 </span>
             </h3>
             <svg version="1.1"
@@ -37,13 +37,13 @@ export const ReminderList = (props) => {
                 fill="purple"
                 xmlns="http://www.w3.org/2000/svg">
                 <g transform="translate(0, 5)">
-                {reminders.map((reminder, index) => {
+                {invoices.map((invoice, index) => {
                     const posX = 2;
                     const posY = index * 40;
                     const prevPosY = ((index - 1) * 40) + 21;
 
                     return (
-                        <g key={reminder.id}>
+                        <g key={invoice.id}>
                             {
                                 (index > 0) &&
                                 <path d={`M${12} ${prevPosY} V ${posY} Z`} fill="transparent" stroke="#89C5E3" strokeWidth="4" />
@@ -51,16 +51,16 @@ export const ReminderList = (props) => {
                             <g style={{ cursor: "pointer" }}
                                 transform={`translate(${posX}, ${posY})`}
                             >
-                                <circle onClick={(_) => { props.onSelect(reminder.id); }} cx="10" cy="10" r="10" strokeWidth="2" stroke="#002B7F" fill="transparent" />
+                                <circle onClick={(_) => { props.onSelect(invoice.id); }} cx="10" cy="10" r="10" strokeWidth="2" stroke="#002B7F" fill="transparent" />
                                 <text x="25" y="15" >
-                                    <tspan fill="purple" className="text-date">{ reminder.remindDate }</tspan>
+                                    <tspan fill="purple" className="text-date">{ invoice.remindDate }</tspan>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <Link style={{textDecoration: "none"}} 
-                                        to={`/invoices/${reminder.id}`}>
+                                        to={`/invoices/${invoice.id}`}>
                                         <tspan fontSize="20" fill="black" >
-                                            <tspan>{reminder.title}</tspan>
+                                            <tspan>{invoice.title}</tspan>
                                             &nbsp;&nbsp;
-                                            <tspan fontWeight="200" fill="black">{reminder.amount} €</tspan>
+                                            <tspan fontWeight="200" fill="black">{invoice.amount} €</tspan>
                                         </tspan>
                                     </Link>
                                 </text>

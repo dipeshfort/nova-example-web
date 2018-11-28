@@ -1,6 +1,6 @@
 {
-  "name": "reminder-web",
-  "title": "Reminder Web",
+  "name": "nova-shop-web",
+  "title": "Nova Shop",
   "version": "1.0.0",
   "private": true,
   "main": "/bin/www",

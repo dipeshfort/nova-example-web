@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { dateFormat } from '../utils';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ReminderService } from "../services/reminder.service";
+import { InvoiceService } from "../services/invoice.service";
 
-class _ReminderDetails extends Component {
+class _InvoiceDetails extends Component {
 
     constructor(props) {
         super(props);
@@ -24,37 +24,37 @@ class _ReminderDetails extends Component {
         this.delete = this.delete.bind(this);
     }
 
-    fillReminder(reminder) {
+    fillInvoice(invoice) {
         this.setState({
             disabled: false,
-            id: reminder.id,
-            title: reminder.title,
-            remindDate: reminder.remindDate,
-            amount: reminder.amount,
-            comments: reminder.comments
+            id: invoice.id,
+            title: invoice.title,
+            remindDate: invoice.remindDate,
+            amount: invoice.amount,
+            comments: invoice.comments
         });
     }
 
     componentDidMount() {
-        if (this.props.reminder) {
-            this.fillReminder(this.props.reminder);
+        if (this.props.invoice) {
+            this.fillInvoice(this.props.invoice);
         }
     }
     componentWillReceiveProps(props) {
-        if (props.reminder) {
-            this.fillReminder(props.reminder);
+        if (props.invoice) {
+            this.fillInvoice(props.invoice);
         }
     } 
     
     save(event) {
         event.preventDefault();
-        ReminderService.update(this.state.id, {
+        InvoiceService.update(this.state.id, {
             title: this.state.title,
             remindDate: this.state.remindDate,
             amount: this.state.amount,
             comments: this.state.comments
-        }).then((reminder) => {
-            this.props.updateReminder(reminder);
+        }).then((invoice) => {
+            this.props.updateInvoice(invoice);
             this.props.history.push('/');
         }).catch((error) => {
             console.error(error);
@@ -65,9 +65,9 @@ class _ReminderDetails extends Component {
     }
 
     delete() {
-        ReminderService.delete(this.state.id)
+        InvoiceService.delete(this.state.id)
             .then(() => {
-                this.props.removeReminder(this.state.id);
+                this.props.removeInvoice(this.state.id);
                 this.props.history.push('/');
             })
             .catch((err) => {
@@ -158,25 +158,25 @@ class _ReminderDetails extends Component {
 
 const mapStateToProps = (state, props) => {
     return {
-        reminder: state.reminders.find(r => r.id === props.match.params.id)
+        invoice: state.invoices.find(r => r.id === props.match.params.id)
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateReminder: (reminder) => {
+        updateInvoice: (invoice) => {
             dispatch({
                 type: 'UPDATE_REMINDER',
-                payload: reminder
+                payload: invoice
             })
         },
-        removeReminder: (reminderId) => {
+        removeInvoice: (invoiceId) => {
             dispatch({
                 type: 'REMOVE_REMINDER',
-                payload: reminderId
+                payload: invoiceId
             })
         }
     }
 }
 
 
-export const ReminderDetails = connect(mapStateToProps, mapDispatchToProps)(_ReminderDetails);
+export const InvoiceDetails = connect(mapStateToProps, mapDispatchToProps)(_InvoiceDetails);

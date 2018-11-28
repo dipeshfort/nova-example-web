@@ -1,17 +1,17 @@
 import { dateFormat } from '../utils';
 
-export class ReminderFactory {
+export class InvoiceFactory {
 
     /**
-     * Create Reminder entity
-     * @param data reminder data from api
-     * @returns {Reminder}
+     * Create Invoice entity
+     * @param data invoiceta from api
+     * @returns {Invoice}
      */
     static create(data) {
-        const reminder = {
+        const invoice = {
             ...data,
             remindDate: dateFormat(new Date(data.remindDate))
         };
-        return reminder;
+        return invoice
     }
 }

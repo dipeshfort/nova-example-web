@@ -1,8 +1,8 @@
-import { ReminderFactory } from "../factories/reminder.factory";
+import { InvoiceFactory } from "../factories/invoice.factory";
 
 const SERVICE_INVOICE_API = `${SERVICE_INVOICE}/invoices`;
 
-export class ReminderService {
+export class InvoiceService {
     static async fetchInvoices(user) {
         if (user.role === "ADMIN") {
             return await this.fetchAll(user.token);
@@ -13,7 +13,7 @@ export class ReminderService {
 
     static async fetchUserInvoice(token) {
         const api = `${ SERVICE_INVOICE }/user-invoices`
-        const reminders = await fetch(api, {
+        const invoice = await fetch(api, {
             method: 'GET',
             cache: 'no-cache',
             headers: {
@@ -24,15 +24,15 @@ export class ReminderService {
             return resp.json()
         });
 
-        this.reminders = reminders.map((reminderApiData) => {
-            return ReminderFactory.create(reminderApiData);
+        this.invoice = invoice.map((invoiceData) => {
+            return InvoiceFactory.create(invoiceData);
         });
-        return Promise.resolve(this.reminders);
+        return Promise.resolve(this.invoice);
     }
 
     static async fetchAll(token) {
         const api = `${SERVICE_INVOICE}/invoices`
-        const reminders = await fetch(api, {
+        const invoice = await fetch(api, {
             method: 'GET',
             cache: 'no-cache',
             headers: {
@@ -43,15 +43,15 @@ export class ReminderService {
             return resp.json()
         });
 
-        this.reminders = reminders.map((reminderApiData) => {
-            return ReminderFactory.create(reminderApiData);
+        this.invoice = invoice.map((invoiceData) => {
+            return InvoiceFactory.create(invoiceData);
         });
-        return Promise.resolve(this.reminders);
+        return Promise.resolve(this.invoice);
     }
 
-    static async create(token, reminderData) {
+    static async create(token, invoice) {
         const data = {
-            ...reminderData,
+            ...invoice,
             status: "OPEN",
             created: new Date()
         };
@@ -59,7 +59,7 @@ export class ReminderService {
         console.info('Creating invoice', {
             token,
             api,
-            reminderData
+            invoice
         });
         const resp = await fetch(api, {
             method: 'POST',
@@ -70,16 +70,16 @@ export class ReminderService {
             },
             body: JSON.stringify(data)
         })
-        const reminderApiData = await resp.json();
-        return ReminderFactory.create(reminderApiData);
+        const invoiceData = await resp.json();
+        return InvoiceFactory.create(invoiceData);
     }
 
-    static async update(reminderId, reminderData) {
+    static async update(invoiceId, updateData) {
         const data = {
-            ...reminderData,
+            ...updateData,
         };
-        const api = `${SERVICE_INVOICE_API}/${reminderId}`;
-        console.info(`Updating ${api}`, reminderData);
+        const api = `${SERVICE_INVOICE_API}/${invoiceId}`;
+        console.info(`Updating ${api}`, updateData);
         const resp = await fetch(api, {
             method: 'PATCH',
             cache: 'no-cache',
@@ -88,11 +88,11 @@ export class ReminderService {
             },
             body: JSON.stringify(data)
         });
-        const reminderApiData = await resp.json();
-        return ReminderFactory.create(reminderApiData);
+        const invoiceData = await resp.json();
+        return InvoiceFactory.create(invoiceData);
     }
-    static async delete(reminderId) {
-        const api = `${SERVICE_INVOICE_API}/${reminderId}`;
+    static async delete(invoiceId) {
+        const api = `${SERVICE_INVOICE_API}/${invoiceId}`;
         console.info(`Deleting ${api}`);
         const resp = await fetch(api, {
             method: 'DELETE',

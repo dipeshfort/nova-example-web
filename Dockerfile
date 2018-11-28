@@ -4,7 +4,7 @@ LABEL author=dipesh
 
 ARG SERVICE_INVOICE
 
-ENV DEBUG=reminder*
+ENV DEBUG=nova-shop*
 ENV SERVICE_INVOICE=$SERVICE_INVOICE
 
 WORKDIR /data/app

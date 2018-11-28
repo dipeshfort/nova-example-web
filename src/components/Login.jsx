@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { UserService } from "../services/user.service";
-import { ReminderService } from "../services/reminder.service";
+import { InvoiceService } from "../services/invoice.service";
 
 class _Login extends Component {
     constructor(props) {
@@ -27,7 +27,7 @@ class _Login extends Component {
                 };
 
                 this.props.setUser(user);
-                ReminderService.fetchInvoices(user).then((invoices) => {
+                InvoiceService.fetchInvoices(user).then((invoices) => {
                     this.props.setInvoices(invoices);
                 });
                 this.props.history.push('/');
