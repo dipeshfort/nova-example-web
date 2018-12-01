@@ -20,13 +20,12 @@ class _Login extends Component<any, any> {
     login = (event: any) => {
         event.preventDefault();
         UserService.login(this.state.credentials).then(async (resp) => {
-            if (resp.token) {
+            if (resp.token) { 
                 const profile = await UserService.fetchUser(resp.token);
                 const user = {
                     ...profile, 
                     token: resp.token
                 };
-
                 this.props.setUser(user);
                 InvoiceService.fetchInvoices(user).then((invoices) => {
                     this.props.setInvoices(invoices);
@@ -44,9 +43,9 @@ class _Login extends Component<any, any> {
                 });
             }
         }).catch((err) => {
-            console.error(err);
+            console.log({err});
             this.setState({
-                error: 'Login failed'
+                error: 'Service not available. Please try again later'
             });
         });
     }
