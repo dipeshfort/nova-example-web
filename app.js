@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   res.locals.SERVICE_INVOICE = process.env.SERVICE_INVOICE;
   res.locals.SERVICE_USER = process.env.SERVICE_USER;
+  res.locals.SERVICE_PRODUCTS = process.env.SERVICE_PRODUCTS;
   next();
 });
 app.use('/', indexRouter);

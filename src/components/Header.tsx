@@ -80,13 +80,6 @@ export const _Header = ({user, logout }) => {
                     )}
                 </div>
             </nav>
-            <section className="container-fluid">
-                <div className="row">
-                    <div className="col">
-                        <CurrentTime />
-                    </div>
-                </div>
-            </section>
         </React.Fragment>
     );
 };

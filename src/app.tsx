@@ -6,7 +6,10 @@ import {
 } from 'react-router-dom';
 import './styles.css';
 import { App } from './app.component';
-import { InvoiceService } from './services/invoice.service';
+import { 
+    InvoiceService,
+    ProductsService
+} from './services';
 
 // ==========================
 // ======== REDUX ===========
@@ -23,6 +26,7 @@ import {
     allReducers
 } from './states/reducers/all-reducers';
 import thunkMiddleware from 'redux-thunk';
+import { ProductType } from './types';
 
 const store = createStore(allReducers, applyMiddleware(
     thunkMiddleware
@@ -47,6 +51,13 @@ try {
     // ignore
 }
 
+ProductsService.fetchProducts()
+    .then((products: ProductType[]) => {
+        store.dispatch({
+            type: 'SET_PRODUCTS',
+            payload: products
+        });
+    });
 
 // ======== /REDUX ===========
 

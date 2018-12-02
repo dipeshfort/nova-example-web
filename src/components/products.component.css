@@ -1,0 +1,46 @@
+.products-component {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.products-component section {
+    width: 140px;
+    margin: 10px;
+    margin-bottom: 15px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+} 
+
+.products-component section .badge {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: 0.75em;
+}
+
+.products-component section figure {
+    margin: 0;
+}
+
+.products-component section figure img {
+    width: 100%;
+    min-width: 140px;
+    min-height: 210px;
+    margin-bottom: 5px;
+} 
+
+.products-component section h1 {
+    font-size: 0.7em;
+    color: #111;
+    margin-bottom: 2px;
+}
+
+.products-component section button {
+    margin-top: auto;
+}
+
+
+

@@ -12,7 +12,6 @@ require('dotenv').config();
 process.env.NODE_ENV = 'development';
 const config = webpackMerge(globalConfig, {
     mode: "development",
-    entry: ['./src/app.js'],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'app.js'
@@ -22,7 +21,8 @@ const config = webpackMerge(globalConfig, {
         htmlWebpackPlugin,
         new webpack.DefinePlugin({
             'SERVICE_INVOICE': JSON.stringify(process.env.SERVICE_INVOICE),
-            'SERVICE_USER': JSON.stringify(process.env.SERVICE_USER)
+            'SERVICE_USER': JSON.stringify(process.env.SERVICE_USER),
+            'SERVICE_PRODUCTS': JSON.stringify(process.env.SERVICE_PRODUCTS)
         })
     ],
     devServer: {
