@@ -7,7 +7,7 @@ const navStyle = {
     marginBottom: "15px"
 };
 
-export const _Header = ({user, logout }) => {
+export const _Header = ({ user, logout, unpaidInvoices }) => {
     return (
         <React.Fragment>
             <nav style={navStyle} className="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -30,7 +30,18 @@ export const _Header = ({user, logout }) => {
                                     <NavLink activeClassName="active" className="nav-link" exact to={"/"}>Home</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink activeClassName="active" className="nav-link" exact to={"/invoices"}>Invoices</NavLink>
+                                    <NavLink activeClassName="active" className="nav-link" exact to={"/invoices"}>
+                                        Invoices
+                                        <span 
+                                            style={{
+                                                position: "relative",
+                                                top: "-4px",
+                                                fontSize: "0.8em"
+                                            }}
+                                            className="badge badge-pill badge-primary badge-rating">
+                                            {unpaidInvoices.length }
+                                        </span>
+                                    </NavLink>
                                 </li>
                                 {isAdmin(user) && (
                                     <li className="nav-item">
@@ -89,7 +100,8 @@ function isAdmin(user) {
 }
 const mapStateToProps = (state) => {
     return {
-        user: state.user
+        user: state.user,
+        unpaidInvoices: state.invoices.filter((invoice) => invoice.status === 'OPEN'),
     }
 }
 

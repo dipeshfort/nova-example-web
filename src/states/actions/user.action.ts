@@ -1,6 +1,9 @@
-import { UserService, InvoiceService } from '../../services'
+import { UserService } from '../../services'
 import { User } from '../../types';
-import { fetchUserProducts } from '../actions';
+import {
+    fetchUserProducts,
+    fetchUserInvoices
+} from '../actions';
 
 export const USER_RECEIVE = 'USER_RECEIVE';
 export const USER_LOGOUT = 'USER_LOGOUT';
@@ -27,16 +30,9 @@ export function fetchUser(token: string) {
                 ...resp.body,
                 token
             };
-
             dispatch(receiveUserAction(user));
             dispatch(fetchUserProducts(user));
-            InvoiceService.fetchInvoices(user).then((invoices: any[]) => {
-                dispatch({
-                    type: 'RECEIVE_REMINDERS',
-                    payload: invoices
-                })
-            });
-          
+            dispatch(fetchUserInvoices(user));
         }
     }
 }

@@ -17,7 +17,7 @@ class _Invoices extends Component<any, any> {
                         <InvoiceList className="list-opened" title={"Open"} onSelect={this.props.markClosed} invoices={this.props.open} />
                     </div>
                     <div className="col-sm-12 col-md-6 col-xl-5">
-                        <InvoiceList className="list-closed" title={"Paid"} onSelect={this.props.markOpen} invoices={this.props.closed} />
+                        <InvoiceList className="list-closed" title={"Archive"} onSelect={this.props.markOpen} invoices={this.props.closed} />
                     </div>
                 </div>
             </section>

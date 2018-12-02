@@ -1,5 +1,6 @@
 import { ProductsService } from "../../services";
 import { ProductsStateType } from '../../types';
+import { fetchUserInvoices } from "./invoices.action";
 
 export const PRODUCT_PURCHASE = 'PRODUCT_PURCHASE';
 
@@ -7,6 +8,7 @@ export const PRODUCT_PURCHASE = 'PRODUCT_PURCHASE';
 export const purchaseProductAction = (dispatch) => async (user, productId) => {
     const resp = await ProductsService.purchaseProduct(user, productId);
     dispatch(fetchUserProducts(user));
+    dispatch(fetchUserInvoices(user));
 };
 
 export const fetchUserProducts = (user) => {
