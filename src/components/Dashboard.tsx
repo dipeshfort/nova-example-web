@@ -7,13 +7,7 @@ export class Dashboard extends Component {
         return (
             <React.Fragment>
                 <section className="container-fluid">
-                    <div className="row">
-                        <div className="col-sm-12" >
-                            <h3>Welcome to Nova Shop</h3>
-                            <h5>Latest Movies</h5>
-                            <ProductsComponent />
-                        </div>
-                    </div>
+                    <ProductsComponent />
                 </section>
             </React.Fragment>
         );

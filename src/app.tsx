@@ -26,7 +26,7 @@ import {
     allReducers
 } from './states/reducers/all-reducers';
 import thunkMiddleware from 'redux-thunk';
-import { ProductType } from './types';
+import { ProductType, UserProductType, ProductsStateType } from './types';
 
 const store = createStore(allReducers, applyMiddleware(
     thunkMiddleware
@@ -45,19 +45,18 @@ try {
                 payload: invoices
             })
         });
+        ProductsService.fetchAllProducts(user)
+            .then((productsStateType: ProductsStateType) => {
+                store.dispatch({
+                    type: 'SET_PRODUCTS',
+                    payload: productsStateType
+                });
+            });
     }
 } catch(err) {
     console.log("ERROR parsing user", err);
     // ignore
 }
-
-ProductsService.fetchProducts()
-    .then((products: ProductType[]) => {
-        store.dispatch({
-            type: 'SET_PRODUCTS',
-            payload: products
-        });
-    });
 
 // ======== /REDUX ===========
 

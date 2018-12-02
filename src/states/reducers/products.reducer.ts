@@ -1,10 +1,17 @@
-import { ProductType } from '../../types'; 
+import { ProductsStateType } from '../../types'; 
+import { PRODUCT_PURCHASE } from '../actions';
 
-export const productsReducer = (state: ProductType[] = [], action: { type: string, payload: any }) => {
+const defaultState: ProductsStateType = {
+    availableProducts: [],
+    userProducts: []
+}
+
+export const productsReducer = (state: ProductsStateType = defaultState, action: { type: string, payload: any }) => {
     switch (action.type) {
         case 'SET_PRODUCTS':
+            console.log(action.payload);
             return action.payload;
-        default: 
+        default:
             return state;
     }
 }

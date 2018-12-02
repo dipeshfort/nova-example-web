@@ -14,7 +14,7 @@
     flex-direction: column;
 } 
 
-.products-component section .badge {
+.products-component section .badge.badge-rating {
     position: absolute;
     top: 2px;
     left: 2px;
