@@ -33,6 +33,10 @@ const config = webpackMerge(globalConfig, {
         ],
         port: process.env.PORT,
         historyApiFallback: true,
+    },
+    externals: {
+        "react": "React",
+        "react-dom": "ReactDOM"
     }
 });
 
