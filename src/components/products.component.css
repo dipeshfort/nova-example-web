@@ -38,8 +38,13 @@
     margin-bottom: 2px;
 }
 
-.products-component section button {
+.products-component section button,
+.products-component section .purchased-tag {
     margin-top: auto;
+}
+
+.products-component section .purchased-tag {
+    font-size: 0.6em;
 }
 
 

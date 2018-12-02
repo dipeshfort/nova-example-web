@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import {
     ProductType,
     ProductsStateType,
-    UserProductType
+    UserProductType,
+    User
 } from '../types';
 import { ProductComponent } from './product.component';
 import './products.component.css';
@@ -13,7 +14,8 @@ import { purchaseProductAction } from '../states/actions'
 export type ProductsComponentProps = {
     availableProducts: ProductType[];
     userProducts: UserProductType[];
-    purchaseProduct: (productId: number) => void;
+    user: User | null,
+    purchaseProduct: (user: User, productId: number) => void;
 }
 
 class ProductsComponent extends Component<ProductsComponentProps, any> {
@@ -22,6 +24,7 @@ class ProductsComponent extends Component<ProductsComponentProps, any> {
             availableProducts,
             purchaseProduct,
             userProducts,
+            user,
         } = this.props; 
         return (
             <React.Fragment>
@@ -45,7 +48,7 @@ class ProductsComponent extends Component<ProductsComponentProps, any> {
                                 <ProductComponent
                                     key={product.id}
                                     product={product}
-                                    purchaseProduct={purchaseProduct} />
+                                    purchaseProduct={(productId) => user && purchaseProduct(user, productId)} />
                                 )) }
                         </section>
                     </div>
@@ -55,10 +58,11 @@ class ProductsComponent extends Component<ProductsComponentProps, any> {
     }
 }
 
-function mapStateToProps({ products }: { products: ProductsStateType}) {
+function mapStateToProps({ products, user }: { products: ProductsStateType, user: User | null}) {
     return {
         availableProducts: products.availableProducts,
         userProducts: products.userProducts,
+        user,
     }
 } 
 

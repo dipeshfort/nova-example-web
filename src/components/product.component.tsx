@@ -17,17 +17,9 @@ export const ProductComponent = (props: ProductComponentProps) => {
             </figure>
             <h1>{product.title}</h1>
             { purchasedDate &&  (
-                <React.Fragment>
-                <strong style={{
-                    fontSize: "0.75em"
-                }}>Purchased</strong>
-                <span style={{
-                        fontSize: "0.7em"
-                    }}
-                    className="badge badge-info">
-                {purchasedDate.toDateString() }
+                <span className="badge badge-secondary purchased-tag">
+                    Purchased<br/>{purchasedDate.toDateString() }
                 </span>
-                </React.Fragment>
             )}
             {!purchasedDate && (
                 <button onClick={() => purchaseProduct && purchaseProduct(product.id) } className="btn btn-primary btn-sm btn-block">

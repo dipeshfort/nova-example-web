@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { CurrentTime } from './CurrentTime';
+import { logoutUserAction } from '../states/actions';
 
 const navStyle = {
     marginBottom: "15px"
@@ -96,9 +96,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         logout: () => {
-            dispatch({
-                type: 'LOGOUT'
-            });
+            dispatch(logoutUserAction());
         }
     }
 }

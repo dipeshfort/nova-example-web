@@ -1,16 +1,18 @@
 import * as React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { User } from './types';
 
 type PropTypes = {
     exact?: any,
     path: string,
     component: React.ComponentClass,
-    user: any,
+    user: User,
 }
 export class _ProtectedRoute extends React.Component<PropTypes, {}> {
     render() {
         const { component: Component, user, ...rest } = this.props
+        console.log('user', user);
         return (
             <Route
                 {...rest}
@@ -24,9 +26,9 @@ export class _ProtectedRoute extends React.Component<PropTypes, {}> {
     }
 }
 
-const mapStateToProps = (state: { user: any }) => {
+const mapStateToProps = ({user}: { user: User }) => {
     return {
-        user: state.user
+        user
     }
 }
 

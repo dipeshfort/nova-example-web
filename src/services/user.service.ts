@@ -44,8 +44,12 @@ export class UserService {
                 "Content-Type": "application/json; charset=utf-8",
                 "Authorization": `Bearer ${token}`
             }
-        })
-        return await resp.json();
+        });
+        const body = await resp.json();
+        return {
+            status: resp.status,
+            body,
+        };
     }
 
     static async fetchUsers(token: string) {

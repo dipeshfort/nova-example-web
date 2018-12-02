@@ -30,9 +30,11 @@
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "redux-logger": "^3.0.6"
   },
   "devDependencies": {
+    "@types/redux-logger": "^3.0.6",
     "awesome-typescript-loader": "^5.2.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",

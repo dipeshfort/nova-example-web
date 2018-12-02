@@ -26,38 +26,22 @@ import {
     allReducers
 } from './states/reducers/all-reducers';
 import thunkMiddleware from 'redux-thunk';
-import { ProductType, UserProductType, ProductsStateType } from './types';
+import { createLogger } from 'redux-logger';
+
+import {
+    fetchUser,
+} from './states/actions';
 
 const store = createStore(allReducers, applyMiddleware(
-    thunkMiddleware
+    thunkMiddleware,
+    createLogger()
 ));
 
-try {
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
-    if (user) {
-        store.dispatch({
-            type: 'SET_USER',
-            payload: user
-        });
-        InvoiceService.fetchInvoices(user).then((invoices: any[]) => {
-            store.dispatch({
-                type: 'RECEIVE_REMINDERS',
-                payload: invoices
-            })
-        });
-        ProductsService.fetchAllProducts(user)
-            .then((productsStateType: ProductsStateType) => {
-                store.dispatch({
-                    type: 'SET_PRODUCTS',
-                    payload: productsStateType
-                });
-            });
-    }
-} catch(err) {
-    console.log("ERROR parsing user", err);
-    // ignore
+const thunkAwareDispatch: any = store.dispatch;
+const userToken: string | null = localStorage.getItem('user');
+if (userToken) {
+    thunkAwareDispatch(fetchUser(userToken));
 }
-
 // ======== /REDUX ===========
 
 render((

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { UserService } from "../services/user.service";
-import { InvoiceService } from "../services/invoice.service";
+import { fetchUser } from '../states/actions';
 
 class _Login extends Component<any, any> {
     constructor(props: any) {
@@ -21,16 +21,7 @@ class _Login extends Component<any, any> {
         event.preventDefault();
         UserService.login(this.state.credentials).then(async (resp) => {
             if (resp.token) { 
-                const profile = await UserService.fetchUser(resp.token);
-                const user = {
-                    ...profile, 
-                    token: resp.token
-                };
-                this.props.setUser(user);
-                InvoiceService.fetchInvoices(user).then((invoices) => {
-                    this.props.setInvoices(invoices);
-                });
-                this.props.history.push('/');
+                this.props.fetchUser(resp.token);
             } else if (resp.code && resp.message) {
                 console.error("ERROR Login", resp);
                 this.setState({
@@ -64,6 +55,8 @@ class _Login extends Component<any, any> {
     render() {
         const { error } = this.state;
         return (
+            <React.Fragment>
+            {this.props.user && <Redirect to='/' />}
             <section className="container col-md-6">
                     { error && (
                     <div className="alert alert-danger">
@@ -111,18 +104,21 @@ class _Login extends Component<any, any> {
                     </div>
                 </form>
             </section>
+            </React.Fragment>
         );
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        user: state.user,
+    }
+}
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        setUser: (user: any) => {
-            dispatch({
-                type: 'SET_USER',
-                payload: user
-            });
+        fetchUser: (token) => {
+            dispatch(fetchUser(token));
         },
         setInvoices: (invoices: any) => {
             dispatch({
@@ -132,4 +128,4 @@ const mapDispatchToProps = (dispatch: any) => {
         }
     }
 }
-export const Login = connect(null, mapDispatchToProps)(_Login);
+export const Login = connect(mapStateToProps, mapDispatchToProps)(_Login);

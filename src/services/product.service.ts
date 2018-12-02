@@ -8,6 +8,7 @@ import {
 declare const SERVICE_PRODUCTS: string;
 const productsEndpoint = `${SERVICE_PRODUCTS}/products`;
 const userProductsEndpoint = `${SERVICE_PRODUCTS}/user-products`;
+const purchaseApiEndpoint = `${SERVICE_PRODUCTS}/user-products/purchase`;
 
 export class ProductsService {
 
@@ -82,5 +83,20 @@ export class ProductsService {
         });
         
         return resp as ProductType[];
+    }
+
+    static async purchaseProduct(user: User, productId: number): Promise<any> {
+        const resp = await fetch(`${purchaseApiEndpoint}?product_id=${productId}`, {
+            method: 'GET',
+            cache: 'no-cache',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                "Authorization": `Bearer ${user.token}`
+            },
+        }).then((resp) => {
+            return resp.json()
+        });
+        
+        console.log("PURCHASE", resp);
     }
 }
