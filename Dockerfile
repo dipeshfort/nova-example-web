@@ -2,19 +2,15 @@ FROM node:8.11
 
 LABEL author=dipesh
 
-ARG SERVICE_INVOICE
+WORKDIR /app
 
-ENV DEBUG=nova-shop*
-ENV SERVICE_INVOICE=$SERVICE_INVOICE
-
-WORKDIR /data/app
+ENV NODE_ENV=production
 
 COPY . .
 
 RUN npm --version \
-    && npm install \
-    && npm run build
+    & npm install --production
 
-EXPOSE 3000
+EXPOSE 5000
 
 CMD ["npm", "start"]
